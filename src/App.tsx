@@ -1,10 +1,12 @@
-
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./theme/theme";
+import SideBar from "./components/SideBar";
 
 function App() {
   return (
-    <div>
-   hello world
-    </div>
+    <ThemeProvider theme={theme}>
+      <SideBar />
+    </ThemeProvider>
   );
 }
 
