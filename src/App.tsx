@@ -1,11 +1,11 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme/theme";
-import SideBar from "./components/SideBar";
+import Main from "./components/Main";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <SideBar />
+      <Main />
     </ThemeProvider>
   );
 }

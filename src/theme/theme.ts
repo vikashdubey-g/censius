@@ -1,6 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 import { green, purple } from "@mui/material/colors";
 import PatternIcon from "../assets/svg/Pattern.svg";
+import { colors } from "./colors";
 
 export const theme = createTheme({
   palette: {
@@ -15,7 +16,7 @@ export const theme = createTheme({
     fontFamily: "Inter",
 
     caption: {
-      color: "#6B7280",
+      color: colors.caption,
       fontWeight: 500,
       fontSize: "14px",
       lineHeight: "17px",
@@ -24,14 +25,14 @@ export const theme = createTheme({
       fontWeight: 600,
       fontSize: "18px",
       lineHeight: "22px",
-      color: "#111827",
+      color: colors.text,
     },
     body1: {
       fontFamily: "Inter",
       fontWeight: 500,
       fontSize: "18px",
       lineHeight: "22px",
-      color: "#1D4ED8",
+      color: colors.blue,
     },
   },
 
@@ -45,7 +46,7 @@ export const theme = createTheme({
           alignItems: "center",
           rowGap: "10px",
           borderRadius: "12px",
-          backgroundColor: "#EFF6FF",
+          backgroundColor: colors.cardBg,
           backgroundImage: `url(${PatternIcon})`,
         },
       },

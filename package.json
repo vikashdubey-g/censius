@@ -23,6 +23,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "test:coverage": "react-scripts test --watchAll=false --coverage",
+    "test:summary": "react-scripts test --coverageReporters='text-summary'",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

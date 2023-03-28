@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { OutlinedInput } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
@@ -16,11 +16,14 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { map } from "lodash";
 
+//icons
 import SearchIcon from "@mui/icons-material/Search";
 
-import { sidebarConfigue } from "./sidebarConfigue";
+// components
+import { sidebarConfigue } from "../configue/sidebarConfigue";
 import UserCard from "./UserCard";
-import { UserData, userConfigue } from "./userConfigue";
+import { userConfigue, UserData } from "../configue/userConfigue";
+import { colors } from "../theme/colors";
 
 const drawerWidth = 240;
 
@@ -34,14 +37,22 @@ interface Props {
 
 export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
   const [userList, setUserList] = useState<UserData[]>([]);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState<string>("");
+  const [sideBarLabel, setSideBarLabel] = useState<string>("Team Members");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  // handling sidebar label click
+  const handleListItem = (e: any, labelVal: string): void => {
+    e.stopPropagation();
+    setSideBarLabel(labelVal);
+  };
+
+  // filtering the userlist depends upon the user name enter in the searchbar
   const updateCountryList = () => {
     const filterCountList = userConfigue?.filter(({ name }) => {
       return name.toLowerCase().includes(userName);
@@ -57,14 +68,36 @@ export default function ResponsiveDrawer(props: Props) {
     <div>
       <Toolbar />
       <Divider />
-      <List>
+      <List sx={{ pr: 2 }}>
         {map(sidebarConfigue, ({ label, Icon }) => (
           <ListItem key={label} disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              sx={
+                sideBarLabel === label
+                  ? {
+                      bgcolor: colors.blue,
+                      borderRadius: "0 8px 8px  0",
+                      color: `${colors.white} !important`,
+                    }
+                  : null
+              }
+              onClick={(e) => handleListItem(e, label)}
+            >
               <ListItemIcon>
                 <Icon />
               </ListItemIcon>
-              <ListItemText primary={label} />
+              <ListItemText
+                sx={
+                  sideBarLabel === label
+                    ? {
+                        "&.MuiListItemText-root .MuiTypography-body2": {
+                          color: `${colors.white} !important`,
+                        },
+                      }
+                    : null
+                }
+                primary={label}
+              />
             </ListItemButton>
           </ListItem>
         ))}
@@ -85,7 +118,7 @@ export default function ResponsiveDrawer(props: Props) {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar sx={{ bgcolor: "#ffffff" }}>
+        <Toolbar sx={{ bgcolor: colors.white }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -95,11 +128,12 @@ export default function ResponsiveDrawer(props: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography fontWeight={700} variant="h6" color="#000000">
-            Team Members
+          <Typography fontWeight={700} variant="h6" color={colors.text}>
+            {sideBarLabel}
           </Typography>
           <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-end" }}>
             <OutlinedInput
+              data-testid="searchBar"
               type="search"
               placeholder="Search.."
               value={userName}
